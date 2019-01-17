@@ -1,0 +1,50 @@
+schema {
+  query: RootQuery
+}
+
+"""An app"""
+type App implements Entity {
+  """
+  
+              The app's ID.
+          
+  """
+  id: ID
+
+  """
+  
+              The app's name.
+          
+  """
+  name: String
+}
+
+interface Entity {
+  name: String
+  id: ID
+}
+
+type RootQuery {
+  """The current viewer"""
+  viewer: User
+}
+
+"""A user"""
+type User implements Entity {
+  """
+  
+              The user's ID.
+          
+  """
+  id: ID
+
+  """
+  
+              The user's name.
+          
+  """
+  name: String
+
+  """User's apps"""
+  apps: [App]
+}

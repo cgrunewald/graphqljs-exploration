@@ -8,5 +8,5 @@ import RootGraphQLMutationType from "./RootGraphQLMutationType";
 
 export default new GraphQLSchema({
     query: RootGraphQLQueryType,
-    // mutation: RootGraphQLMutationType,
+    mutation: RootGraphQLMutationType,
 });

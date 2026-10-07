@@ -18,9 +18,9 @@ export default class App extends Entity<AppData> {
     }
 
     static async genEnforce(id: string): Promise<App> {
-        const a = App.genNullable(id);
+        const a = await App.genNullable(id);
         if (a == null) {
-            throw new Error('null');
+            throw new Error(`App ${id} not found.`);
         }
         return a;
     }

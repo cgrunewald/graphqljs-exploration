@@ -1,5 +1,6 @@
 schema {
   query: RootQuery
+  mutation: RootMutation
 }
 
 """An app"""
@@ -24,9 +25,29 @@ interface Entity {
   id: ID
 }
 
+type RootMutation {
+  """Creates a new user"""
+  createUser(
+    """The new user's name (1-64 characters after trimming)"""
+    name: String!
+  ): User!
+
+  """Renames an existing user"""
+  updateUserName(
+    """The ID of the user to update"""
+    id: ID!
+
+    """The user's new name (1-64 characters after trimming)"""
+    name: String!
+  ): User!
+}
+
 type RootQuery {
   """The current viewer"""
   viewer: User
+
+  """Look up a user by ID"""
+  user(id: ID!): User
 }
 
 """A user"""

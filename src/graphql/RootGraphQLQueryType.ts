@@ -2,7 +2,7 @@
  * Copyright (c) 2019 Calvin Grunewald
  */
 
-import { GraphQLObjectType } from "graphql/type";
+import { GraphQLObjectType, GraphQLNonNull, GraphQLID } from "graphql/type";
 import UserGraphQLType from "./types/UserGraphQLType";
 import User from "../entity/User";
 
@@ -16,6 +16,16 @@ export default new GraphQLObjectType({
                 return await User.genNullable('4');
             },
             description: "The current viewer",
+       },
+       user: {
+            type: UserGraphQLType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) },
+            },
+            resolve: async (source, args: {id: string}) => {
+                return await User.genNullable(args.id);
+            },
+            description: "Look up a user by ID",
        },
     }
 });

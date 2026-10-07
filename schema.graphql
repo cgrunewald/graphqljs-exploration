@@ -25,6 +25,14 @@ interface Entity {
   id: ID
 }
 
+"""Relay pagination information"""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
 type RootMutation {
   """Creates a new user"""
   createUser(
@@ -48,6 +56,15 @@ type RootQuery {
 
   """Look up a user by ID"""
   user(id: ID!): User
+
+  """All users, ordered by ID, with Relay cursor pagination"""
+  users(
+    """Number of items to return (0-100, default 10)"""
+    first: Int
+
+    """Return items after this cursor"""
+    after: String
+  ): UserConnection!
 }
 
 """A user"""
@@ -68,4 +85,17 @@ type User implements Entity {
 
   """User's apps"""
   apps: [App]
+}
+
+"""A Relay connection of User nodes"""
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""An edge in a User connection"""
+type UserEdge {
+  cursor: String!
+  node: User
 }

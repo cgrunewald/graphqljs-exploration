@@ -52,6 +52,15 @@ export default class User extends Entity<UserData> {
         return a;
     }
 
+    /**
+     * Returns all users ordered by ascending numeric ID (insertion order).
+     */
+    static async genAll(): Promise<User[]> {
+        return Array.from(userStore.entries())
+            .sort(([a], [b]) => Number(a) - Number(b))
+            .map(([id, data]) => new User(id, {...data}));
+    }
+
     static async genCreate(name: string): Promise<User> {
         const data = {name: User.validateName(name)};
         const id = String(nextUserID++);
